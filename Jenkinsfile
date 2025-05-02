@@ -3,7 +3,7 @@ pipeline {
 
 
   environment {
-    FIREBASE_TOKEN = credentials('FIREBASE_TOKEN')
+    FIREBASE_TOKEN = credentials('FIREBASE_TOKEN') // firebase token configured the jenkins credentials
   }
 
   tools {
