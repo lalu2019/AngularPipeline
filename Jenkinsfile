@@ -1,6 +1,11 @@
 pipeline {
   agent any
 
+
+  environment {
+    FIREBASE_TOKEN = credentials('FIREBASE_TOKEN')
+  }
+
   tools {
     git 'Default' 
     nodejs 'NodeJS_20' // Set this name in Jenkins > Global Tool Configuration
@@ -27,7 +32,7 @@ pipeline {
 
     stage('Build') {
       steps {
-        sh 'npm run build --prod'
+        sh 'npm run build --configuration=production'
       }
     }
 
@@ -40,6 +45,12 @@ pipeline {
     stage('Deploy or Archive') {
       steps {
         archiveArtifacts artifacts: 'dist/**', fingerprint: true
+      }
+    }
+    stage('Deploy to Firebase') {
+      steps {
+        sh 'npm install -g firebase-tools'
+        sh "firebase deploy --only hosting --token \"$FIREBASE_TOKEN\""
       }
     }
   }
