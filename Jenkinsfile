@@ -2,6 +2,7 @@ pipeline {
   agent any
 
   tools {
+    git 'Default' 
     nodejs 'NodeJS_20' // Set this name in Jenkins > Global Tool Configuration
   }
 
